@@ -22,6 +22,8 @@
 #   version 0.2  09.28.20
 #       - Update Strategy 1 and 2
 #       - add overall profit for each Strategy after all analysis is run
+#   version 0.3  09.28.20
+#       - Increase plot size slightly
 
 import os
 import tkinter as tk
@@ -57,7 +59,7 @@ def get_stock_data_files(data_interval):
     path_to_data_files = LOCATION_OF_DATA_FILES
     # choice of daily or minute data
     if data_interval == "daily":
-        path_to_data_files = LOCATION_OF_DATA_FILES + "daily/"
+        path_to_data_files = LOCATION_OF_DATA_FILES + "daily/OneYear"
 
     elif data_interval == "minute":
         path_to_data_files = LOCATION_OF_DATA_FILES + "Intraday/eachDay"
@@ -115,7 +117,7 @@ class BaseWindow:
         self.all_stock_data = all_calculated_stock_data
 
         # Figure and layout params
-        self.topFigure = Figure(figsize=(15, 7), dpi=100)
+        self.topFigure = Figure(figsize=(15, 8), dpi=100)
         self.number_of_plots = 5 * 100
         self.plot_layout = 1 * 10
         self.candlesticks_plot_number = 1
@@ -319,8 +321,7 @@ class BaseWindow:
 
 if __name__ == "__main__":
     #get filenames for all.csv files in the directory of interest
-    stock_data_files = get_stock_data_files("minute")  # minute or daily data
-    filename = "IBM_adjust_09.08.20.csv"
+    stock_data_files = get_stock_data_files("daily")  # minute or daily data
 
     # put data in list in pandas frame
     list_all_stock_data_in_df = []
