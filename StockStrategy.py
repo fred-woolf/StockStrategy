@@ -3,10 +3,11 @@
            Moving averages, Momentum, Stochastics, MACD, and Williams &R
 """
 #
-#  Copyright Fred W. Woolf
+#   Fred W. Woolf
 #   version 0.1
 #   Initial version
 #   09.25.20
+#   Required external libraries: tkinter, matplotlib, pandas, os, scipy, math
 #
 #   TBD:
 #       Add labels for plots
@@ -17,7 +18,10 @@
 #       Add stock ticker selector
 #       Add stock ticker data request from quandl site and notification
 #       adapt williams to stochastic init set of data
-
+#
+#   version 0.2  09.28.20
+#       - Update Strategy 1 and 2
+#       - add overall profit for each Strategy after all analysis is run
 
 import os
 import tkinter as tk
@@ -83,8 +87,8 @@ class BaseWindow:
             :param main_window tk.TK() base window param for display
             :param all_calculated_stock_data list of data which was read from .csv files
 
-            :param number_of_plots int  defines the number of plots to be displayed on the main chart page
-            :param se;f.plot_layout int defines the grid pattern for plots
+            :param self.number_of_plots int  defines the number of plots to be displayed on the main chart page
+            :param self.plot_layout int defines the grid pattern for plots
             :param self.topFigure Figure  for the main window
             :param self.canvas1 FigureCanvasTkAgg  the drawing canvas
             The following integers define the locations of plots on the main chart page:
@@ -300,10 +304,10 @@ class BaseWindow:
         """
         index_len = 0
         for i in range(len(self.all_stock_data.list_candlestick_stock_data)):
-            macd_data = self.all_stock_data.list_candlestick_stock_data[1] \
-                                [CommonDefs.INDEX_OF_MACD_DATA]["macd"]['MACD_9_12']
-            macd_data_signal = self.all_stock_data.list_candlestick_stock_data[1] \
-                                [CommonDefs.INDEX_OF_MACD_DATA]["macd"]["MACDsign_9_12"]
+            macd_data = self.all_stock_data.list_candlestick_stock_data[i] \
+                                [CommonDefs.INDEX_OF_MACD_DATA]["macd"]['MACD_12_26']
+            macd_data_signal = self.all_stock_data.list_candlestick_stock_data[i] \
+                                [CommonDefs.INDEX_OF_MACD_DATA]["macd"]["MACDsign_12_26"]
 
             # make sequential index across all data sets
             index = [x + index_len for x in macd_data_signal.index]

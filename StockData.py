@@ -180,7 +180,7 @@ class StockData:
 
             # momentum
             dict_momentum = {}
-            number_of_days_for_lookback = 9
+            number_of_days_for_lookback = 12
             dict_momentum["momentum"] = momentum(self.list_stock_data_adjusted[i], number_of_days_for_lookback)
             self.list_candlestick_stock_data[i].append(dict_momentum)
 
@@ -191,8 +191,8 @@ class StockData:
 
             # MACD
             dict_macd = {}
-            number_of_days_for_lookback_fast = 9
-            number_of_days_for_lookback_slow = 12
+            number_of_days_for_lookback_fast = 12
+            number_of_days_for_lookback_slow = 26
             dict_macd["macd"] = macd(self.list_stock_data_adjusted[i], number_of_days_for_lookback_fast,
                                      number_of_days_for_lookback_slow)
             self.list_candlestick_stock_data[i].append(dict_macd)
@@ -201,9 +201,14 @@ class StockData:
 
     def execute_strategies(self):
         # for each strategy, see if the indicators initiate a purchase
+        overall_profit_strategy_1 = 0
+        overall_profit_strategy_2 = 0
         for i in range(0, len(self.list_candlestick_stock_data)):
             back_test_strategies = BackTest(self.list_candlestick_stock_data[i])
 
-            back_test_strategies.backtest_strategy_1()
+            overall_profit_strategy_1 = overall_profit_strategy_1 + back_test_strategies.backtest_strategy_1()
 
-            back_test_strategies.backtest_strategy_2()
+            overall_profit_strategy_2 = overall_profit_strategy_2 + back_test_strategies.backtest_strategy_2()
+
+        print("\n overall_profit Strategy 1 = ", overall_profit_strategy_1)
+        print("\n overall_profit Strategy 1 = ", overall_profit_strategy_2)

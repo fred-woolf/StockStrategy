@@ -57,11 +57,11 @@ def macd(df, n_fast, n_slow):
     """
     ema_fast = pd.Series(df['Close'].ewm(span=n_fast, min_periods=n_slow).mean())
     ema_slow = pd.Series(df['Close'].ewm(span=n_slow, min_periods=n_slow).mean())
-    macd = pd.Series(ema_fast - ema_slow, name='MACD_' + str(n_fast) + '_' + str(n_slow))
-    macd_sign = pd.Series(macd.ewm(span=9, min_periods=9).mean(), name='MACDsign_' + str(n_fast) + '_' + str(n_slow))
-    macd_diff = pd.Series(macd - macd_sign, name='MACDdiff_' + str(n_fast) + '_' + str(n_slow))
+    _macd = pd.Series(ema_fast - ema_slow, name='MACD_' + str(n_fast) + '_' + str(n_slow))
+    macd_sign = pd.Series(_macd.ewm(span=9, min_periods=9).mean(), name='MACDsign_' + str(n_fast) + '_' + str(n_slow))
+    macd_diff = pd.Series(_macd - macd_sign, name='MACDdiff_' + str(n_fast) + '_' + str(n_slow))
 
-    df = pd.DataFrame(macd)
+    df = pd.DataFrame(_macd)
     df = df.join(macd_sign)
     df = df.join(macd_diff)
     return df
