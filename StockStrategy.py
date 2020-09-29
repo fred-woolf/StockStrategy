@@ -24,6 +24,8 @@
 #       - add overall profit for each Strategy after all analysis is run
 #   version 0.3  09.28.20
 #       - Increase plot size slightly
+#   version 0.4  09.28.20
+#       - change plot dpi 
 
 import os
 import tkinter as tk
@@ -117,7 +119,7 @@ class BaseWindow:
         self.all_stock_data = all_calculated_stock_data
 
         # Figure and layout params
-        self.topFigure = Figure(figsize=(15, 8), dpi=100)
+        self.topFigure = Figure(figsize=(15, 8), dpi=85)
         self.number_of_plots = 5 * 100
         self.plot_layout = 1 * 10
         self.candlesticks_plot_number = 1
@@ -144,7 +146,7 @@ class BaseWindow:
         self.helv12 = tkFont.Font(family='Helvetica', size=12)
         self.helv10_bold = tkFont.Font(family='Helvetica', size=10, weight='bold')
         self.helv10 = tkFont.Font(family='Helvetica', size=10)
-        self.main_frame = tk.Frame(main_window, width=1100, height=780, bg='white')
+        self.main_frame = tk.Frame(main_window, width=1100, height=500, bg='white')
         self.main_frame.grid(column=0, row=0, sticky="nsew")
 
         # add top frame into main frame
@@ -167,7 +169,7 @@ class BaseWindow:
         self.button_get_stock_data.state = "disabled"   # disabled for now
 
         # add the chart frame to the main frame
-        self.chart_frame = tk.Frame(self.main_frame, width=1200, height=740, bg="green", borderwidth=5, relief=RIDGE)
+        self.chart_frame = tk.Frame(self.main_frame, width=1200, height=720, bg="gainsboro", borderwidth=5, relief=RIDGE)
         self.chart_frame.grid_propagate(False)
         self.chart_frame.grid(column=0, row=2, columnspan=2, sticky=E+W+N+S, padx=(0, 0), pady=(0, 0))
 
@@ -321,7 +323,7 @@ class BaseWindow:
 
 if __name__ == "__main__":
     #get filenames for all.csv files in the directory of interest
-    stock_data_files = get_stock_data_files("daily")  # minute or daily data
+    stock_data_files = get_stock_data_files("minute")  # minute or daily data
 
     # put data in list in pandas frame
     list_all_stock_data_in_df = []
@@ -339,6 +341,5 @@ if __name__ == "__main__":
     win.title("Stock Data BackTest Analysis")
     win.resizable(False, False)
 
-    canvas = tk.Canvas(win, highlightthickness=0, borderwidth=10, height=700, width=1600)
     app = BaseWindow(win, AllStockData)
     win.mainloop()

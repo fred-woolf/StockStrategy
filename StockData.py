@@ -42,8 +42,9 @@ class StockData:
             # Date
             col_names = df_element.columns
             if "Date" not in col_names:
+                # make sure column of dates is in string format
                 # join columns with date and time into one
-                df_element.iloc[:, 0] = df_element.iloc[:, 0].apply(lambda x: x+":")
+                df_element.iloc[:, 0] = df_element.iloc[:, 0].apply(lambda x:  str(x) +":")
                 df_element.iloc[:, 0] = df_element.iloc[:, 0] + df_element.iloc[:, 1]
                 # reformat
                 df_element.iloc[:, 0] = pd.to_datetime(df_element.iloc[:, 0], format='%m/%d/%Y:%H:%M')
@@ -211,4 +212,4 @@ class StockData:
             overall_profit_strategy_2 = overall_profit_strategy_2 + back_test_strategies.backtest_strategy_2()
 
         print("\n overall_profit Strategy 1 = ", overall_profit_strategy_1)
-        print("\n overall_profit Strategy 1 = ", overall_profit_strategy_2)
+        print("\n overall_profit Strategy 2 = ", overall_profit_strategy_2)
